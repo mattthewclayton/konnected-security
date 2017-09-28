@@ -9,7 +9,7 @@ local sendTimer = tmr.create()
 
 -- hack to ensure pin D8 stays low after boot so it can be used with a high-level trigger relay
 gpio.mode(8, gpio.OUTPUT)
-gpio.write(8, gpio.LOW)
+gpio.write(8, gpio.HIGH)
 
 timeout:register(10000, tmr.ALARM_SEMI, node.restart)
 
@@ -21,7 +21,7 @@ end
 for i, actuator in pairs(actuators) do
   print("Heap:", node.heap(), "Initializing actuator pin:", actuator.pin, "Trigger:", actuator.trigger)
   gpio.mode(actuator.pin, gpio.OUTPUT)
-  gpio.write(actuator.pin, actuator.trigger == gpio.LOW and gpio.HIGH or gpio.LOW)
+  gpio.write(actuator.pin, gpio.HIGH)
 end
 
 sensorTimer:alarm(200, tmr.ALARM_AUTO, function(t)
